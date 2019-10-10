@@ -19,6 +19,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.time.Instant;
+import java.util.Collections;
+import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -199,6 +201,8 @@ public class AccountControllerTests {
         account = accountService.create(account);
 
         mockMvc.perform(delete("/api/account/{id}/funds/{amount}", account.getId(), -5)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(Collections.emptyMap()))
         )
                 .andDo(print())
                 .andExpect(status().isConflict());
@@ -216,6 +220,8 @@ public class AccountControllerTests {
         account = accountService.create(account);
 
         mockMvc.perform(delete("/api/account/{id}/funds/{amount}", account.getId(), 25)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsBytes(Collections.emptyMap()))
         )
                 .andDo(print())
                 .andExpect(status().isConflict());
@@ -231,8 +237,6 @@ public class AccountControllerTests {
     @Test
     public void testAccountRemoveFunds() throws Exception {
 
-
-
         Account account = Account.getInstance()
                 .name("Prateek Pathak")
                 .email("prateekpathak@live.in")
@@ -242,6 +246,7 @@ public class AccountControllerTests {
 
         mockMvc.perform(delete("/api/account/{id}/funds/{amount}", account.getId(), BigDecimal.valueOf(129.63))
                 .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(Map.of("note", "My Note")))
         )
                 .andDo(print())
                 .andExpect(status().isOk());
@@ -261,6 +266,7 @@ public class AccountControllerTests {
         assertThat(accountLedgerService.findAll().get(0).getAccount().getId()).isEqualTo(account.getId());
         assertThat(accountLedgerService.findAll().get(0).getAmount()).isEqualTo(BigDecimal.valueOf(129.63));
         assertThat(accountLedgerService.findAll().get(0).getType()).isEqualTo(AccountLedger.AccountLedgerEntryType.DEBIT);
+        assertThat(accountLedgerService.findAll().get(0).getNote()).isEqualTo("My Note");
     }
 
 

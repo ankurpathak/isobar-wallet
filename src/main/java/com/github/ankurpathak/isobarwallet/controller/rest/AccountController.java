@@ -5,6 +5,7 @@ import com.github.ankurpathak.isobarwallet.controller.rest.util.ControllerUtil;
 import com.github.ankurpathak.isobarwallet.domain.model.Account;
 import com.github.ankurpathak.isobarwallet.exception.NotFoundException;
 import com.github.ankurpathak.isobarwallet.service.IAccountService;
+import org.apache.commons.collections.MapUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +20,7 @@ import java.awt.print.Pageable;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.time.Instant;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api")
@@ -65,8 +67,8 @@ public class AccountController {
 
 
     @DeleteMapping("/account/{id}/funds/{amount}")
-    public ResponseEntity<?> removeFunds(@PathVariable("id") BigInteger id, @PathVariable("amount") BigDecimal amount){
-        accountService.removeFunds(id,amount);
+    public ResponseEntity<?> removeFunds(@PathVariable("id") BigInteger id, @PathVariable("amount") BigDecimal amount, @RequestBody Map<String, Object> body){
+        accountService.removeFunds(id,amount, MapUtils.getString(body, "note"));
         return ResponseEntity.ok().build();
     }
 

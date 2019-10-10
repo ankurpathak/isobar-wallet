@@ -10,6 +10,7 @@ import java.util.List;
 
 public interface IAccountService extends IDomainService<Account, BigInteger> {
     void addFunds(BigInteger id, BigDecimal amount);
+    void removeFunds(BigInteger id, BigDecimal amount, String note);
     void removeFunds(BigInteger id, BigDecimal amount);
 
     List<AccountLedger> recentAccountLedger(BigInteger id);

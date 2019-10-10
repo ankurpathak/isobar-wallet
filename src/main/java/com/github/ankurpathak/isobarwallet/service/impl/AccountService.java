@@ -48,7 +48,11 @@ public class AccountService extends AbstractDomainService<Account, BigInteger> i
 
     @Override
     @Transactional
-    public void removeFunds(BigInteger id, BigDecimal amount) {
+    public void removeFunds(BigInteger id, BigDecimal amount) {removeFunds(id, amount, null);}
+
+    @Override
+    @Transactional
+    public void removeFunds(BigInteger id, BigDecimal amount, String note) {
         if (BigDecimal.ZERO.compareTo(amount) < 0) {
             findById(id)
                     .map(x -> {
@@ -59,6 +63,7 @@ public class AccountService extends AbstractDomainService<Account, BigInteger> i
                     .map(x -> x.removeFunds(amount)).map(this::update).ifPresentOrElse(x -> {
                 accountLedgerService.create(AccountLedger.getInstance().account(x)
                         .type(AccountLedger.AccountLedgerEntryType.DEBIT)
+                        .note(note)
                         .amount(amount)
                 );
             }, () -> {
