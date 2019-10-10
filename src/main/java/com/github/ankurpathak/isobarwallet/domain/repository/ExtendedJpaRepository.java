@@ -1,6 +1,5 @@
 package com.github.ankurpathak.isobarwallet.domain.repository;
 
-import com.github.ankurpathak.isobarwallet.domain.model.AccountLedger;
 import com.github.ankurpathak.isobarwallet.domain.model.Domain;
 import com.github.ankurpathak.isobarwallet.domain.repository.custom.ICustomizedDomainRepository;
 import org.springframework.data.jpa.repository.JpaRepository;

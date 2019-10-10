@@ -5,7 +5,6 @@ import com.github.ankurpathak.isobarwallet.domain.model.AccountLedger;
 import com.github.ankurpathak.isobarwallet.domain.model.AccountLedger_;
 import org.springframework.data.jpa.domain.Specification;
 
-import javax.persistence.criteria.ParameterExpression;
 import java.time.Instant;
 
 public class AccountLedgerSpecs  {
