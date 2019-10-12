@@ -84,5 +84,11 @@ public class AccountController {
        return ResponseEntity.ok(accountService.accountLedgerInInterval(id, fromDate, toDate));
     }
 
+    @PostMapping("/account/funds/{fromId}/{toId}//{amount}")
+    public ResponseEntity<?> transferFunds(@PathVariable("fromId") BigInteger fromId, @PathVariable("toId") BigInteger toId, @PathVariable("amount") BigDecimal amount){
+        accountService.transferFunds(fromId, toId,amount);
+        return ResponseEntity.ok().build();
+    }
+
 
 }

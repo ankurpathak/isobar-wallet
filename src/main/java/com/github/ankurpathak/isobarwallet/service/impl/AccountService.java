@@ -90,4 +90,11 @@ public class AccountService extends AbstractDomainService<Account, BigInteger> i
                         accountLedgerService.findAll(AccountLedgerSpecs.accountLedgerOfAccountInInterval(account, fromDate, toDate), Sort.by(Sort.Order.desc(AccountLedger_.CREATED))))
                 .orElseThrow(() -> new NotFoundException(String.valueOf(id), "id", Account.class.getSimpleName()));
     }
+
+    @Override
+    @Transactional
+    public void transferFunds(BigInteger fromId, BigInteger toId, BigDecimal amount) {
+        removeFunds(fromId, amount);
+        addFunds(toId, amount);
+    }
 }

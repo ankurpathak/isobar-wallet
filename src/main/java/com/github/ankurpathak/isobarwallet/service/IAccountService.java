@@ -16,4 +16,6 @@ public interface IAccountService extends IDomainService<Account, BigInteger> {
     List<AccountLedger> recentAccountLedger(BigInteger id);
 
     Object accountLedgerInInterval(BigInteger id, Instant fromDate, Instant toDate);
+
+    void transferFunds(BigInteger fromId, BigInteger toId, BigDecimal amount);
 }
