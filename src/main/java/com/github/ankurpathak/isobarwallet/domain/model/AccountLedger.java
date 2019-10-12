@@ -18,7 +18,7 @@ public class AccountLedger extends Domain<BigInteger> {
     @Enumerated(EnumType.STRING)
     private AccountLedgerEntryType type = AccountLedgerEntryType.CREDIT;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "account_id", nullable = false)
     private Account account;
 
